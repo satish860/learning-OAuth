@@ -7,15 +7,25 @@ public static class Config
 {
     public static IEnumerable<IdentityResource> IdentityResources =>
         new IdentityResource[]
-        { 
+        {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
             new IdentityResource("roles","Your Role(s)",new[] {"role"}),
         };
 
+    public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
+    {
+        new ApiResource("imagegalleryapi","Image Gallery API")
+        {
+            Scopes = {"imagegalleryapi.fullaccess"}
+        }
+    };
+
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
-            { };
+            {
+                new ApiScope("imagegalleryapi.fullacess","Image Gallery Full access")
+            };
 
     public static IEnumerable<Client> Clients =>
         new Client[] 
@@ -45,7 +55,8 @@ public static class Config
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "roles"
+                        "roles",
+                        "imagegalleryapi.fullacess"
                     }
                     
                 }

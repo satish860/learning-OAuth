@@ -36,6 +36,7 @@ builder.Services.AddAuthentication(c =>
         c.ClientSecret = "secret";
         c.GetClaimsFromUserInfoEndpoint = true;
         c.Scope.Add("roles");
+        c.Scope.Add("imagegalleryapi.fullacess");
         c.ClaimActions.MapJsonKey("role", "role");
         c.TokenValidationParameters = new()
         {
