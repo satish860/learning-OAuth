@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .AddJsonOptions(configure => 
+    .AddJsonOptions(configure =>
         configure.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 // create an HttpClient used for accessing the API
@@ -14,6 +16,22 @@ builder.Services.AddHttpClient("APIClient", client =>
     client.DefaultRequestHeaders.Clear();
     client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
+
+builder.Services.AddAuthentication(c =>
+{
+    c.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    c.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+}).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+ .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, c =>
+    {
+        c.SignInScheme=CookieAuthenticationDefaults.AuthenticationScheme;
+        c.SaveTokens = true;
+        c.ResponseType = "code";
+        c.Authority = "https://localhost:5001";
+        c.ClientId = "imagegallery";
+        c.ClientSecret = "secret";
+        c.GetClaimsFromUserInfoEndpoint = true;
+    });
 
 var app = builder.Build();
 
@@ -29,6 +47,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
