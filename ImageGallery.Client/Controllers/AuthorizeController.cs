@@ -14,5 +14,10 @@ namespace ImageGallery.Client.Controllers
             await HttpContext
                 .SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
