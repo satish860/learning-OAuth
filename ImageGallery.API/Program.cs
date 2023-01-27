@@ -1,5 +1,6 @@
 using ImageGallery.API.DbContexts;
 using ImageGallery.API.Services;
+using ImageGallery.AuthorizationPolicies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
@@ -34,6 +35,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             RoleClaimType = "role"
         };
     });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("canaddImage", Policies.CanAddImage());
+});
 
 var app = builder.Build();
 
