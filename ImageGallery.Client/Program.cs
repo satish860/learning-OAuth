@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
@@ -31,6 +32,14 @@ builder.Services.AddAuthentication(c =>
         c.ClientId = "imagegallery";
         c.ClientSecret = "secret";
         c.GetClaimsFromUserInfoEndpoint = true;
+        c.Scope.Add("roles");
+        c.ClaimActions.MapJsonKey("role", "role");
+        c.TokenValidationParameters = new()
+        {
+            NameClaimType = "given_name",
+            RoleClaimType = "role"
+        };
+
     });
 
 var app = builder.Build();
