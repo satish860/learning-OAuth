@@ -2,6 +2,7 @@ using ImageGallery.API.DbContexts;
 using ImageGallery.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<GalleryContext>(options =>
         builder.Configuration["ConnectionStrings:ImageGalleryDBConnectionString"]);
 });
 
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 // register the repository
 builder.Services.AddScoped<IGalleryRepository, GalleryRepository>();
 

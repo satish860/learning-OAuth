@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +11,17 @@ builder.Services.AddControllersWithViews()
     .AddJsonOptions(configure =>
         configure.JsonSerializerOptions.PropertyNamingPolicy = null);
 
+builder.Services.AddAccessTokenManagement();
+
 // create an HttpClient used for accessing the API
 builder.Services.AddHttpClient("APIClient", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ImageGalleryAPIRoot"]);
     client.DefaultRequestHeaders.Clear();
     client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-});
+}).AddUserAccessTokenHandler();
+
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 builder.Services.AddAuthentication(c =>
 {
@@ -36,7 +41,7 @@ builder.Services.AddAuthentication(c =>
         c.ClientSecret = "secret";
         c.GetClaimsFromUserInfoEndpoint = true;
         c.Scope.Add("roles");
-        c.Scope.Add("api.full");
+        c.Scope.Add("imagegalleryapi.full");
         c.ClaimActions.MapJsonKey("role", "role");
         c.TokenValidationParameters = new()
         {
