@@ -44,6 +44,7 @@ public static class Config
                         "https://localhost:7184/signout-callback-oidc"
                     },
                     RequireConsent=true,
+                    AllowOfflineAccess=true,
                     AllowedGrantTypes = new []
                     {
                         GrantType.AuthorizationCode
@@ -59,6 +60,7 @@ public static class Config
                         "roles",
                         "imagegalleryapi.full",
                         "country"
+
                     }
                     
                 }

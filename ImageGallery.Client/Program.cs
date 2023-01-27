@@ -44,6 +44,7 @@ builder.Services.AddAuthentication(c =>
         c.Scope.Add("roles");
         c.Scope.Add("country");
         c.Scope.Add("imagegalleryapi.full");
+        c.Scope.Add("offline_access");
         c.ClaimActions.MapJsonKey("role", "role");
         c.ClaimActions.MapUniqueJsonKey("country", "country");
         c.TokenValidationParameters = new()
