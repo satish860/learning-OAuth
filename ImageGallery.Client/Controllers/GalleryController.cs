@@ -190,6 +190,9 @@ namespace ImageGallery.Client.Controllers
             var identityToken = await HttpContext
                 .GetTokenAsync(OpenIdConnectParameterNames.IdToken);
 
+            var accessToken = await HttpContext
+                .GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
             // write it out
             _logger.LogInformation($"Identity token: {identityToken}");
 
@@ -198,6 +201,8 @@ namespace ImageGallery.Client.Controllers
             {
                 _logger.LogInformation($"Claim type: {claim.Type} - Claim value: {claim.Value}");
             }
+
+            _logger.LogInformation($"Access token: {accessToken}");
         }
     }
 }
