@@ -29,6 +29,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         c.Audience = "imagegalleryapi";
         c.Authority = "https://localhost:5001";
+        c.TokenValidationParameters = new()
+        {
+            RoleClaimType = "role"
+        };
     });
 
 var app = builder.Build();
