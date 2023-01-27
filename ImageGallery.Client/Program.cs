@@ -41,8 +41,10 @@ builder.Services.AddAuthentication(c =>
         c.ClientSecret = "secret";
         c.GetClaimsFromUserInfoEndpoint = true;
         c.Scope.Add("roles");
+        c.Scope.Add("country");
         c.Scope.Add("imagegalleryapi.full");
         c.ClaimActions.MapJsonKey("role", "role");
+        c.ClaimActions.MapUniqueJsonKey("country", "country");
         c.TokenValidationParameters = new()
         {
             NameClaimType = "given_name",

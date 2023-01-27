@@ -28,6 +28,7 @@ public class TestUsers
                         new Claim(JwtClaimTypes.GivenName, "David"),
                         new Claim(JwtClaimTypes.FamilyName, "figg"),
                         new Claim("role","payinguser"),
+                        new Claim("country","be"),
                     }
                 },
                 new TestUser
@@ -40,6 +41,7 @@ public class TestUsers
                         new Claim(JwtClaimTypes.GivenName, "Emma"),
                         new Claim(JwtClaimTypes.FamilyName, "Smith"),
                         new Claim("role", "freeuser"),
+                        new Claim("country","nl"),
                     }
                 }
             };
