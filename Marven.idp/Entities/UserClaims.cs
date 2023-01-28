@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 
 namespace Marven.idp.Entities
 {
     public class UserClaims
     {
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
 
         public string Type { get; set; }
 

@@ -19,6 +19,9 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
+
+    var seedDatabase = app.Services.GetRequiredService<SeedDatabase>();
+    seedDatabase.IntializeDatabase();
     
     app.Run();
 }

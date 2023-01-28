@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 
 namespace Marven.idp.Entities
 {
     public class User
     {
        
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
 
        
         public string Subject { get; set; }
@@ -19,5 +20,7 @@ namespace Marven.idp.Entities
         public bool Active { get; set; }
 
         public string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
+
+        public ICollection<UserClaims> UserClaims { get; set; }
     }
 }

@@ -1,3 +1,5 @@
+using Marven.idp.Entities;
+using MongoDB.Driver;
 using Serilog;
 
 namespace Marven.idp;
@@ -8,6 +10,8 @@ internal static class HostingExtensions
     {
         // uncomment if you want to add a UI
         builder.Services.AddRazorPages();
+        ConfigureMongoDB(builder);
+        builder.Services.AddTransient<SeedDatabase>();
 
         builder.Services.AddIdentityServer(options =>
             {
@@ -43,5 +47,27 @@ internal static class HostingExtensions
         app.MapRazorPages().RequireAuthorization();
 
         return app;
+    }
+
+
+    private static void ConfigureMongoDB(WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<IMongoClient, MongoClient>(s =>
+        {
+            var uri = s.GetRequiredService<IConfiguration>()["DBHOST"];
+            if(string.IsNullOrEmpty(uri))
+            {
+                return new MongoClient();
+            }
+            return new MongoClient(uri);
+        });
+        builder.Services.AddSingleton<IMongoCollection<User>>(s =>
+        {
+            var mongoClient = s.GetRequiredService<IMongoClient>();
+            var DBName = s.GetRequiredService<IConfiguration>()["DBNAME"];
+            var database = mongoClient.GetDatabase(DBName);
+            var collection = database.GetCollection<User>("User");
+            return collection;
+        });
     }
 }
