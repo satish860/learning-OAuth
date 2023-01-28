@@ -1,4 +1,5 @@
 using Marven.idp.Entities;
+using Marven.idp.Services;
 using MongoDB.Driver;
 using Serilog;
 
@@ -12,6 +13,7 @@ internal static class HostingExtensions
         builder.Services.AddRazorPages();
         ConfigureMongoDB(builder);
         builder.Services.AddTransient<SeedDatabase>();
+        builder.Services.AddScoped<ILocalStore,LocalStore>();
 
         builder.Services.AddIdentityServer(options =>
             {
