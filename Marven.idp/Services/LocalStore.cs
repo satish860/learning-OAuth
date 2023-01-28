@@ -14,11 +14,11 @@ namespace Marven.idp.Services
         }
 
 
-        public User FindBySubjectId(string subjectId)
+        public Task<User> FindBySubjectIdAsync(string subjectId)
         {
            return this.collection
                       .Find(p=>p.Subject==subjectId)
-                      .FirstOrDefault();
+                      .FirstOrDefaultAsync();
         }
 
         public User FindByUsername(string username)
@@ -26,6 +26,18 @@ namespace Marven.idp.Services
             return this.collection
                       .Find(p => p.UserName == username)
                       .FirstOrDefault();
+        }
+
+        public async Task<ICollection<UserClaims>> GetClaimsBySubjectId(string subjectId)
+        {
+            var user = await FindBySubjectIdAsync(subjectId);
+            return user.UserClaims;
+        }
+
+        public async Task<bool> IsUserActiveBySubjectId(string subjectId)
+        {
+            var user = await FindBySubjectIdAsync(subjectId);
+            return user.Active;
         }
 
         public bool ValidateCredentials(string username, string password)

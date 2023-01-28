@@ -7,8 +7,12 @@ namespace Marven.idp.Services
     {
         bool ValidateCredentials(string username, string password);
 
-        User FindBySubjectId(string subjectId);
+        Task<User> FindBySubjectIdAsync(string subjectId);
 
         User FindByUsername(string username);
+
+        Task<ICollection<UserClaims>> GetClaimsBySubjectId(string subjectId);
+
+        Task<bool> IsUserActiveBySubjectId(string subjectId);
     }
 }

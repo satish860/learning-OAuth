@@ -59,7 +59,7 @@ namespace Marven.idp
                 new User
                 {
                     Id = ObjectId.Parse("63d4cf9c16d5b9fd690ffc1f"),
-                    Subject = "d860efca-22d9-47fd-8249-791ba61b07c7",
+                    Subject = "b7539694-97e7-4dfe-84da-b4256e1ff5c7",
                     UserName = "Emma",
                     Password = "password",
                     Active = true,
